@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GOENGOまほう占い</title>
+  <style>
+    body { font-family: 'Arial', sans-serif; margin: 0; background: #fff8e1; color: #333; text-align: center; }
+    header { background-color: #ffe082; padding: 1em; }
+    h1 { margin: 0; font-size: 1.6em; color: #a0522d; }
+    .step { padding: 2em 1em; }
+    img { max-width: 80%; height: auto; margin-bottom: 1em; }
+    .cards img { width: 120px; margin: 0.5em; }
+    button { background: #f06292; color: white; padding: 1em 2em; border: none; font-size: 1em; margin-top: 1em; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GOENGOまほう占い</h1>
+  </header>
+
+  <section class="step" style="background:#fff3e0;">
+    <h2>STEP 1: GOENGOカードを1枚えらんでね</h2>
+    <div class="cards">
+      <img src="card1.png" alt="カード1" />
+      <img src="card2.png" alt="カード2" />
+      <img src="card3.png" alt="カード3" />
+      <img src="card4.png" alt="カード4" />
+    </div>
+  </section>
+
+  <section class="step" style="background:#fce4ec;">
+    <h2>STEP 2: 今の気分でスイーツを選んでね</h2>
+    <img src="goengo_yellow.webp" alt="スイーツを楽しむGOENGO" />
+  </section>
+
+  <section class="step" style="background:#ede7f6;">
+    <h2>STEP 3: 診断結果</h2>
+    <p>あなたのまほうタイプは…？</p>
+    <img src="card4.png" alt="診断結果サンプル" />
+    <p>くわしい結果はLINEで受け取れます📩</p>
+    <button onclick="alert('LINE登録へジャンプ！')">LINEで診断結果を見る</button>
+  </section>
+
+  <footer style="padding: 2em; background: #ffe082;">
+    <img src="tuktuk.png" alt="トゥクトゥクGOENGO号" width="300"/>
+    <p>GOENGOはまちのどこかで、あなたにまほうを届けています。</p>
+  </footer>
+</body>
+</html>
