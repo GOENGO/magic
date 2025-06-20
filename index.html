@@ -1,51 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GOENGOまほう占い</title>
-  <style>
-    body { font-family: 'Arial', sans-serif; margin: 0; background: #fff8e1; color: #333; text-align: center; }
-    header { background-color: #ffe082; padding: 1em; }
-    h1 { margin: 0; font-size: 1.6em; color: #a0522d; }
-    .step { padding: 2em 1em; }
-    img { max-width: 80%; height: auto; margin-bottom: 1em; }
-    .cards img { width: 120px; margin: 0.5em; }
-    button { background: #f06292; color: white; padding: 1em 2em; border: none; font-size: 1em; margin-top: 1em; border-radius: 8px; }
-  </style>
+<meta charset="UTF-8">
+<title>GOENGOまほう占い｜完全診断</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: sans-serif; background: #fffef5; color: #333; margin: 0; padding: 0; text-align: center; }
+h1 { background: #f44336; color: white; padding: 1em; margin: 0; }
+section { padding: 2em; }
+button { padding: 0.8em 1.5em; font-size: 1em; margin-top: 1em; }
+select, .card-select { font-size: 1em; padding: 0.5em; margin: 0.5em; }
+.result { background: #e8f5e9; padding: 1.5em; margin: 1em; border-radius: 10px; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>GOENGOまほう占い</h1>
-  </header>
+<h1>GOENGOまほう占い</h1>
+<section id="step1">
+  <h2>STEP1: 生まれた日を選んでください</h2>
+  <select id="birthDay">
+    <option value="1">1日</option><option value="2">2日</option><option value="3">3日</option><option value="4">4日</option><option value="5">5日</option><option value="6">6日</option><option value="7">7日</option><option value="8">8日</option><option value="9">9日</option><option value="10">10日</option><option value="11">11日</option><option value="12">12日</option><option value="13">13日</option><option value="14">14日</option><option value="15">15日</option><option value="16">16日</option><option value="17">17日</option><option value="18">18日</option><option value="19">19日</option><option value="20">20日</option><option value="21">21日</option><option value="22">22日</option><option value="23">23日</option><option value="24">24日</option><option value="25">25日</option><option value="26">26日</option><option value="27">27日</option><option value="28">28日</option><option value="29">29日</option><option value="30">30日</option><option value="31">31日</option>
+  </select>
+  <h2>GOENGOカードを選んでね</h2>
+  <div class="card-select">
+    <label><input type="radio" name="card" value="0"> 愚者</label>
+    <label><input type="radio" name="card" value="1"> 魔術師</label>
+    <label><input type="radio" name="card" value="2"> 女教皇</label>
+  </div>
+  <button onclick="goStep2()">次へ</button>
+</section>
 
-  <section class="step" style="background:#fff3e0;">
-    <h2>STEP 1: GOENGOカードを1枚えらんでね</h2>
-    <div class="cards">
-      <img src="card1.png" alt="カード1" />
-      <img src="card2.png" alt="カード2" />
-      <img src="card3.png" alt="カード3" />
-      <img src="card4.png" alt="カード4" />
-    </div>
-  </section>
+<section id="step2" style="display:none;">
+  <h2>STEP2: スイーツカードを選んでね</h2>
+  <select id="sweetCard">
+    <option value="0">チョコレート</option><option value="1">どらやき</option><option value="2">モンブラン</option><option value="3">ようかん</option><option value="4">だんご</option><option value="5">シュークリーム</option><option value="6">プリン</option><option value="7">ベリーケーキ</option><option value="8">ミルフィーユ</option>
+  </select><br>
+  <button onclick="showResult()">診断する</button>
+</section>
 
-  <section class="step" style="background:#fce4ec;">
-    <h2>STEP 2: 今の気分でスイーツを選んでね</h2>
-    <img src="goengo_yellow.webp" alt="スイーツを楽しむGOENGO" />
-  </section>
+<section id="result" style="display:none;" class="result">
+  <h2>診断結果</h2>
+  <div id="resultText"></div>
+  <p><a href="https://lin.ee/GQ6HUNv" target="_blank">LINEでPDFを受け取る📩</a></p>
+</section>
 
-  <section class="step" style="background:#ede7f6;">
-    <h2>STEP 3: 診断結果</h2>
-    <p>あなたのまほうタイプは…？</p>
-    <img src="card4.png" alt="診断結果サンプル" />
-    <p>くわしい結果はLINEで受け取れます📩</p>
-    <button onclick="alert('LINE登録へジャンプ！')">LINEで診断結果を見る</button>
-  </section>
+<script>
+const results = [{'id': '0-0', 'magic_type': 'ひかりのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-1', 'magic_type': 'ひかりのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-2', 'magic_type': 'ひかりのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-3', 'magic_type': 'ひかりのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-4', 'magic_type': 'ひかりのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-5', 'magic_type': 'ひかりのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-6', 'magic_type': 'ひかりのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-7', 'magic_type': 'ひかりのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '0-8', 'magic_type': 'ひかりのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「ひかりのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-0', 'magic_type': 'いやしのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-1', 'magic_type': 'いやしのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-2', 'magic_type': 'いやしのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-3', 'magic_type': 'いやしのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-4', 'magic_type': 'いやしのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-5', 'magic_type': 'いやしのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-6', 'magic_type': 'いやしのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-7', 'magic_type': 'いやしのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '1-8', 'magic_type': 'いやしのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「いやしのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-0', 'magic_type': 'まもりのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-1', 'magic_type': 'まもりのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-2', 'magic_type': 'まもりのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-3', 'magic_type': 'まもりのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-4', 'magic_type': 'まもりのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-5', 'magic_type': 'まもりのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-6', 'magic_type': 'まもりのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-7', 'magic_type': 'まもりのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '2-8', 'magic_type': 'まもりのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「まもりのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-0', 'magic_type': 'ととのえのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-1', 'magic_type': 'ととのえのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-2', 'magic_type': 'ととのえのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-3', 'magic_type': 'ととのえのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-4', 'magic_type': 'ととのえのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-5', 'magic_type': 'ととのえのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-6', 'magic_type': 'ととのえのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-7', 'magic_type': 'ととのえのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '3-8', 'magic_type': 'ととのえのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「ととのえのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-0', 'magic_type': 'ひらめきのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-1', 'magic_type': 'ひらめきのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-2', 'magic_type': 'ひらめきのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-3', 'magic_type': 'ひらめきのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-4', 'magic_type': 'ひらめきのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-5', 'magic_type': 'ひらめきのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-6', 'magic_type': 'ひらめきのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-7', 'magic_type': 'ひらめきのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '4-8', 'magic_type': 'ひらめきのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「ひらめきのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-0', 'magic_type': 'そだてのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-1', 'magic_type': 'そだてのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-2', 'magic_type': 'そだてのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-3', 'magic_type': 'そだてのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-4', 'magic_type': 'そだてのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-5', 'magic_type': 'そだてのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-6', 'magic_type': 'そだてのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-7', 'magic_type': 'そだてのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '5-8', 'magic_type': 'そだてのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「そだてのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-0', 'magic_type': 'つながりのまほう', 'sweet': 'チョコレート', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「チョコレートのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-1', 'magic_type': 'つながりのまほう', 'sweet': 'どらやき', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「どらやきのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-2', 'magic_type': 'つながりのまほう', 'sweet': 'モンブラン', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「モンブランのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-3', 'magic_type': 'つながりのまほう', 'sweet': 'ようかん', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「ようかんのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-4', 'magic_type': 'つながりのまほう', 'sweet': 'だんご', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「だんごのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-5', 'magic_type': 'つながりのまほう', 'sweet': 'シュークリーム', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「シュークリームのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-6', 'magic_type': 'つながりのまほう', 'sweet': 'プリン', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「プリンのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-7', 'magic_type': 'つながりのまほう', 'sweet': 'ベリーケーキ', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「ベリーケーキのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}, {'id': '6-8', 'magic_type': 'つながりのまほう', 'sweet': 'ミルフィーユ', 'message': 'あなたのまほうタイプは「つながりのまほう」、今のエネルギーは「ミルフィーユのまほう」。\nGOENGOからのひとこと：信じる気持ちが、やさしさのはじまりです。', 'pdf': 'https://lin.ee/GQ6HUNv'}];
 
-  <footer style="padding: 2em; background: #ffe082;">
-    <img src="tuktuk.png" alt="トゥクトゥクGOENGO号" width="300"/>
-    <p>GOENGOはまちのどこかで、あなたにまほうを届けています。</p>
-  </footer>
+function goStep2() {
+  const day = document.getElementById("birthDay").value;
+  const card = document.querySelector("input[name='card']:checked");
+  if (!day || !card) {
+    alert("生まれた日とカードを選んでください");
+    return;
+  }
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+function showResult() {
+  const day = parseInt(document.getElementById("birthDay").value);
+  const card = parseInt(document.querySelector("input[name='card']:checked").value);
+  const sweet = parseInt(document.getElementById("sweetCard").value);
+  const baseType = ((day + card) % 7);  // 7タイプ分類ロジック
+  const result = results.find(r => r.id === `${baseType}-${sweet}`);
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("resultText").innerText = result.message;
+  document.getElementById("result").style.display = "block";
+}
+</script>
 </body>
 </html>
